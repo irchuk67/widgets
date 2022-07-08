@@ -2,27 +2,38 @@ import React, {useEffect, useState } from "react";
 import axios from 'axios';
 
 let Search = () => {
-    const [term, setTerm] = useState('');
+    const [term, setTerm] = useState('team');
+    const [debouncedTerm, setDebouncedTerm] = useState(term);
     const [results, setResults] = useState([]);
 
-    useEffect( () => {
-        let search = async () => {
-          const {data} = await axios.get(`https://en.wikipedia.org/w/api.php`,{
-              params:{
-                  action: 'query',
-                  list: 'search',
-                  format: 'json',
-                  origin: '*',
-                  srsearch: term,
-              }
-          })
+
+    useEffect(() => {
+        const timerID = setTimeout(() => {
+            setDebouncedTerm(term);
+        }, 1000);
+
+        return () => {
+            clearTimeout(timerID);
+        };
+    }, [term]);
+
+
+    useEffect(() => {
+        const search = async () => {
+            const {data} = await axios.get(`https://en.wikipedia.org/w/api.php`,{
+                params:{
+                    action: 'query',
+                    list: 'search',
+                    origin: '*',
+                    format: 'json',
+                    srsearch: debouncedTerm,
+                }
+            })
             setResults(data.query.search);
         };
-        if (term){
-            search();
-        }
+        search();
+    }, [debouncedTerm])
 
-    }, [term]);
 
     let resultList = results.map((item) => {
         return(
