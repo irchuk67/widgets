@@ -3,6 +3,8 @@ import Accordion from "./Components/Accordion";
 import Search from "./Components/Search";
 import Dropdown from "./Components/Dropdown";
 import Translate from "./Components/Translate";
+import Navigation from "./Components/Navigation";
+import Route from "./Components/Route";
 
 let App = () => {
     const items = [
@@ -51,22 +53,30 @@ let App = () => {
         }
     ]
 
+    const [selected, setSelected] = useState(dropdownOptions[0]);
 
-
-    const [selected, setSelected] = useState(dropdownOptions[0])
-  return (
-    <div className="ui container">
-        <h1>Widgets</h1>
-        <Search/>
-        <Accordion items={items}/>
-        <Dropdown selected={selected}
-                  onSelectedChange={setSelected}
-                  options={dropdownOptions}
-                  label={'Color'}
-        />
-        <Translate options={translateOptions}/>
-    </div>
-  );
+    return (
+        <div className="ui container">
+            <h1>Widgets</h1>
+            <Navigation/>
+            <Route path={'/accordion'}>
+                <Accordion items={items}/>
+            </Route>
+            <Route path={'/list'}>
+                <Search/>
+            </Route>
+            <Route path={'/dropdown'}>
+                <Dropdown selected={selected}
+                          onSelectedChange={setSelected}
+                          options={dropdownOptions}
+                          label={'Color'}
+                />
+            </Route>
+            <Route path={'/translate'}>
+                <Translate options={translateOptions}/>
+            </Route>
+        </div>
+    );
 }
 
 export default App;

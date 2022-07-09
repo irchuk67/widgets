@@ -25,8 +25,9 @@ const Convert = ({text, language}) => {
             );
             setOutput(data.data.translations[0].translatedText)
         }
-
-        doTranslation();
+        if(debouncedText){
+            doTranslation();
+        }
     }, [debouncedText, language])
     return(
         <div>
