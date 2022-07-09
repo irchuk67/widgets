@@ -1,6 +1,6 @@
 import React, {useEffect, useRef, useState} from "react";
 
-let Dropdown = ({options, onSelectedChange, selected}) => {
+let Dropdown = ({options, onSelectedChange, selected, label}) => {
     const [isActive, setIsActive] = useState(false);
     const ref = useRef();
 
@@ -9,7 +9,7 @@ let Dropdown = ({options, onSelectedChange, selected}) => {
             const onBodyClick = (event) => {
                 if(ref.current.contains(event.target)){
                     return;
-                };
+                }
                 setIsActive(false);
 
 
@@ -41,7 +41,7 @@ let Dropdown = ({options, onSelectedChange, selected}) => {
     return(
         <div className={'ui form'} ref={ref}>
             <div className="field">
-                <label className="label">Select a Color: </label>
+                <label className="label">Select a {label}: </label>
                 <div className={`ui selection dropdown  ${isActive ? 'visible active' : ''}`}
                      onClick={() => setIsActive(!isActive)}>
                     <i className="dropdown icon"></i>
@@ -49,7 +49,7 @@ let Dropdown = ({options, onSelectedChange, selected}) => {
                     <div className={`menu ${isActive ? 'visible transition' : ''}`}>{renderedOptions}</div>
                 </div>
             </div>
-            <p className={'text'} style={{color: selected.value}}>This is {selected.value}!</p>
+            { label === 'Color' ? <p className={'text'} style={{color: selected.value}}>This is {selected.value}!</p> : null}
 
 
         </div>

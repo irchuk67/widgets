@@ -2,6 +2,7 @@ import React, {useState} from "react";
 import Accordion from "./Components/Accordion";
 import Search from "./Components/Search";
 import Dropdown from "./Components/Dropdown";
+import Translate from "./Components/Translate";
 
 let App = () => {
     const items = [
@@ -34,6 +35,24 @@ let App = () => {
         }
     ]
 
+    const translateOptions = [
+        {
+            label: 'Ukrainian',
+            value: 'uk'
+
+        },
+        {
+            label: 'Arabic',
+            value: 'ar'
+        },
+        {
+            label: 'Hindi',
+            value: 'hi'
+        }
+    ]
+
+
+
     const [selected, setSelected] = useState(dropdownOptions[0])
   return (
     <div className="ui container">
@@ -43,7 +62,9 @@ let App = () => {
         <Dropdown selected={selected}
                   onSelectedChange={setSelected}
                   options={dropdownOptions}
+                  label={'Color'}
         />
+        <Translate options={translateOptions}/>
     </div>
   );
 }
